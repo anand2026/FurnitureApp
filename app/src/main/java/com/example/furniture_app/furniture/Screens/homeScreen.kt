@@ -94,22 +94,22 @@ fun homeScreen(
 @Composable
 fun Rooms() {
     Column {
+        Spacer(modifier = Modifier.height(6.dp))
         Text(text = "Rooms", style = TextStyle(
             fontSize = 20.sp,
             fontWeight = FontWeight.W600,
             color = Color.Black
         ))
-        Spacer(modifier = Modifier.height(12.dp))
+
         Text(text = "Furniture for every corners of your rooms", style = TextStyle(
             fontSize = 16.sp,
             fontWeight = FontWeight.W500,
             color = LightGray_1
         ),modifier = Modifier
-            .padding(12.dp)
-            .width(100.dp)
+            .padding(vertical = 12.dp)
             )
         Spacer(modifier = Modifier.height(12.dp))
-        LazyRow(modifier = Modifier.padding(top = 12.dp)){
+        LazyRow(){
             items(roomList.size){
                 RoomSection(room = roomList[it])
             }
@@ -122,19 +122,27 @@ fun RoomSection(
     room: Rooms,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier.padding(end = 15.dp)){
+    Box(modifier = modifier.padding(end = 15.dp),
+        contentAlignment = Alignment.Center
+    ){
         Image(painter = painterResource(id = room.image), contentDescription = "",
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .height(150.dp)
                 .width(200.dp)
                 .align(Alignment.Center)
                 .clip(RoundedCornerShape(8.dp)),
         )
-        Text(text = room.title, style = TextStyle(
+        Text(text = room.title,
+            style = TextStyle(
             fontSize = 16.sp,
             fontWeight = FontWeight.W600,
-            color = TextColor_1
-        ))
+            color = TextColor_1,
+            ),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 12.dp)
+        )
     }
 }
 @Composable
@@ -205,7 +213,7 @@ fun PopularEachRow(
     modifier: Modifier = Modifier,
     onClick: () -> Unit={}
 ) {
-    Column(modifier = modifier.clickable { onClick}){
+    Column(modifier = modifier.padding(horizontal = 5.dp).clickable { onClick}){
         Box{
             Image(painter = painterResource(id = popular.image), contentDescription = "",
                 modifier = Modifier
