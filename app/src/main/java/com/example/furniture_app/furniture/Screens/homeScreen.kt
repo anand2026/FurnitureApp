@@ -213,7 +213,7 @@ fun PopularEachRow(
     modifier: Modifier = Modifier,
     onClick: () -> Unit={}
 ) {
-    Column(modifier = modifier.padding(horizontal = 5.dp).clickable { onClick}){
+    Column(modifier = modifier.padding(horizontal = 5.dp).clickable { onClick()}){
         Box{
             Image(painter = painterResource(id = popular.image), contentDescription = "",
                 modifier = Modifier

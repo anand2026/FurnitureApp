@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -71,7 +72,11 @@ fun ProductDetailScreen(
                 .fillMaxWidth()
                 .height(250.dp), contentScale = ContentScale.FillWidth
             )
-        headerSection()
+        headerSection(
+            onBack = {
+                navHostController.navigateUp()
+            }
+        )
         Box(modifier = Modifier
             .padding(top = 230.dp)
             .fillMaxSize()
@@ -108,11 +113,13 @@ fun ProductDetailScreen(
 }
 
 @Composable
-fun BottomBarItem(
+fun BoxScope.BottomBarItem(
     modifier: Modifier = Modifier,
     onClick: () -> Unit={}
 ) {
-   Column(modifier=modifier.fillMaxWidth()) {
+   Column(modifier= modifier
+       .fillMaxWidth()
+       .align(Alignment.BottomCenter)) {
        Divider(Modifier.fillMaxWidth(), color = LineColor, thickness = 1.dp)
        Row (modifier= modifier
            .padding(20.dp)
@@ -219,16 +226,17 @@ fun ratingRow() {
                    painter = painterResource(id = R.drawable.star), contentDescription = "",
                    modifier = Modifier
                        .size(20.dp),
-               )
-               Spacer(modifier = Modifier.width(5.dp))
-               Text(text = "4.5", style = TextStyle(
-                   fontSize = 16.sp,
-                   fontWeight = FontWeight.W600,
-                   color = TextColor_1
-               ),
-                   modifier = Modifier.align(Alignment.CenterVertically))
+                   )
 
-           }}
+           }
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Text(text = "4.5", style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.W600,
+                        color = TextColor_1),
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                        )
+                }
 
         Spacer(modifier = Modifier.height(12.dp))
         Row (){
@@ -290,24 +298,27 @@ fun ProductCountButton(
     }
     Row{
         Button(
-            onClick = { count.value++}) {
-            Icon(painter = painterResource(id = R.drawable.plus1), contentDescription ="",
-                modifier = Modifier.size(20.dp),tint = DarkOrange
+            onClick = {
+                if (count.value>0) count.value--
+            } ) {
+            Icon(painter = painterResource(id = R.drawable.minus1), contentDescription ="",
+                modifier = Modifier.size(30.dp),tint = DarkOrange
             )
         }
+
+            Spacer(modifier = Modifier.width(10.dp))
         Text(text = count.value.toString(), style = TextStyle(
-            fontSize = 16.sp,
+            fontSize = 26.sp,
             fontWeight = FontWeight.W600,
             color = TextColor_1
         ))
+        Spacer(modifier = Modifier.width(10.dp))
         Button(
-            onClick = {
-               if (count.value>0) count.value--
-            } ) {
-            Icon(painter = painterResource(id = R.drawable.minus1), contentDescription ="",
-                modifier = Modifier.size(20.dp),tint = DarkOrange
+            onClick = { count.value++}) {
+            Icon(painter = painterResource(id = R.drawable.plus1), contentDescription ="",
+                modifier = Modifier.size(30.dp),tint = DarkOrange
             )
-    }
+        }
 }
 }
 @Composable
@@ -317,18 +328,18 @@ fun headerSection(
     Row (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp), horizontalArrangement = Arrangement.SpaceBetween
+            .padding(12.dp), horizontalArrangement = Arrangement.SpaceBetween
     ){
         IconButton(onClick = { onBack() }) {
             Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription ="",
                 modifier = Modifier
-                    .size(32.dp)
+                    .size(52.dp)
                     .padding(top = 12.dp),tint = Color.Black
             )
         }
         Icon(painter = painterResource(id = R.drawable.shareicon), contentDescription = "",
             modifier = Modifier
-                .size(32.dp)
+                .size(42.dp)
                 .padding(top = 12.dp),tint = Color.White
             )
     }
